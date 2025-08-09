@@ -3,7 +3,7 @@ package ConfigurableReportGenerator;
 import java.util.HashMap;
 
 public class ReportFactory {
-  HashMap<String, ReportGenerator> reportGeneratorHashMap;
+  HashMap<String, ReportGenerator> reportGeneratorHashMap = new HashMap<>();
 
   public ReportFactory(){
     this.reportGeneratorHashMap.put("PDF", new PDFReportGenerator());
