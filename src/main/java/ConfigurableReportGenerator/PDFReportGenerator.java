@@ -1,7 +1,6 @@
 package ConfigurableReportGenerator;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class PDFReportGenerator implements ReportGenerator{
   @Override
