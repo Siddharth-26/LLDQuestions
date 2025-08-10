@@ -5,10 +5,6 @@ public class Configuration {
   private String reportType;
   private static Configuration instance;
 
-  public void setReportType(String type) {
-    this.reportType = type;
-  }
-
   public String getReportType() {
     return reportType;
   }
@@ -21,7 +17,8 @@ public class Configuration {
       return instance;
     }
     else{
-      return new Configuration(type);
+      instance = new Configuration(type);
+      return instance;
     }
   }
 }
