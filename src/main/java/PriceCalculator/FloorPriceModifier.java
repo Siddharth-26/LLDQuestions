@@ -6,12 +6,12 @@ public class FloorPriceModifier extends PriceModifier{
   Calculator priceCalculatorObject;
 
   public FloorPriceModifier(Calculator priceCalculatorObject){
-    this.priceCalculatorObject = priceCalculatorObject;
+    super(priceCalculatorObject);
   }
 
   @Override
   public double calculate(List<Item> itemList) {
-    double calculatedPrice =  this.priceCalculatorObject.calculate(itemList);
+    double calculatedPrice =  super.calculate(itemList);
     if(calculatedPrice<Configuration.getInstance().minPrice){
       return Configuration.getInstance().minPrice;
     }

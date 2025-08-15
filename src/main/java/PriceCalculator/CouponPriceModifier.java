@@ -6,13 +6,13 @@ public class CouponPriceModifier extends PriceModifier{
   Calculator priceCalculatorObject;
   String coupon;
   public CouponPriceModifier(Calculator priceCalculatorObject, String coupon){
-    this.priceCalculatorObject = priceCalculatorObject;
+    super(priceCalculatorObject);
     this.coupon = coupon;
   }
 
   @Override
   public double calculate(List<Item> itemList) {
-    double calculatedPrice = this.priceCalculatorObject.calculate(itemList);
+    double calculatedPrice = super.calculate(itemList);
     Configuration config = Configuration.getInstance();
     if(config.couponCodes.containsKey(this.coupon)){
       calculatedPrice-=config.couponCodes.get(this.coupon);

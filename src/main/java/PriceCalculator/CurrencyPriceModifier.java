@@ -9,12 +9,12 @@ public class CurrencyPriceModifier extends PriceModifier{
   private String currency;
 
   public CurrencyPriceModifier(Calculator priceCalculatorObject, String currency) {
-    this.priceCalculatorObject = priceCalculatorObject;
+    super(priceCalculatorObject);
     this.currency = currency;
   }
   @Override
   public double calculate(List<Item> itemList){
-      double calcualtedPrice = this.priceCalculatorObject.calculate(itemList);
+      double calcualtedPrice = super.calculate(itemList);
       Configuration config = Configuration.getInstance();
       int units = config.getCurrencyMinorUnit(this.currency);
     System.out.println("Currency Price Modifier Modifier" + Double.toString(BigDecimal.valueOf(calcualtedPrice).setScale(units, RoundingMode.DOWN).doubleValue()));

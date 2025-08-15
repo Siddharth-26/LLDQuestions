@@ -7,13 +7,13 @@ public class PercentageDiscountModifier extends PriceModifier{
   String percentagePromo;
 
   public PercentageDiscountModifier(Calculator priceCalculatorObject, String percentagePromoCode){
-    this.priceCalculatorObject = priceCalculatorObject;
+    super(priceCalculatorObject);
     this.percentagePromo = percentagePromoCode;
   }
 
   @Override
   public double calculate(List<Item> itemList) {
-    double calculatedPrice = this.priceCalculatorObject.calculate(itemList);
+    double calculatedPrice = super.calculate(itemList);
     if(Configuration.getInstance().percentagePromoCode.containsKey(percentagePromo)){
       double discount = calculatedPrice*(Configuration.getInstance().percentagePromoCode.get(this.percentagePromo))/100;
       calculatedPrice-=discount;

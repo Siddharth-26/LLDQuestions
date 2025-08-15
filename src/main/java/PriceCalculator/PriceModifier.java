@@ -7,7 +7,6 @@ public class PriceModifier implements Calculator{
   public PriceModifier(Calculator priceCalculatorObject){
     this.priceCalculatorObject = priceCalculatorObject;
   }
-  public PriceModifier(){};
   @Override
   public double calculate(List<Item> itemList) {
     return priceCalculatorObject.calculate(itemList);
