@@ -48,7 +48,7 @@ public class Request {
   }
 
 
-  // The client is calling something like this Request.Builder.
+  // The client is calling something like this Response.Builder.
 
 
 }
