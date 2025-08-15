@@ -17,6 +17,12 @@ public class SMSRequest implements Request{
   // Do something. like throw error send a different status code.
     }
   }
+
+  @Override
+  public String getChannel() {
+    return "";
+  }
+
   public boolean checkLimit(String message){
     if(message.length()<=this.limit){
       return true;
