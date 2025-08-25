@@ -1,5 +1,6 @@
 package BridgeDesignPatternUIElements;
 
 public interface Renderers {
-  public String render();
+  public String renderButton();
+  public String rederMenu();
 }

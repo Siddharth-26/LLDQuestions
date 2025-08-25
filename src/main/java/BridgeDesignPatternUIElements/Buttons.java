@@ -7,6 +7,6 @@ public class Buttons implements UIComponents{
   }
   @Override
   public void draw() {
-    System.out.println("Drawing the Button."+ this.renderers.render());
+    System.out.println("Drawing the Button."+ this.renderers.renderButton());
   }
 }

@@ -7,6 +7,6 @@ public class Menu implements UIComponents{
   }
   @Override
   public void draw() {
-    System.out.println("Drawing the Menu" + this.renderers.render());
+    System.out.println("Drawing the Menu" + this.renderers.rederMenu());
   }
 }
