@@ -38,7 +38,7 @@ public class HttpRequest {
   }
 
   public static class Builder{
-    private String url;
+    private  String url;
     private HttpMethods method;
     private HashMap<String, String> headers;
     private String body;
@@ -64,7 +64,19 @@ public class HttpRequest {
       return this;
     }
     public HttpRequest build(){
-      return new HttpRequest(this);
+      if(this.url==null || this.method==null){
+        System.out.println("INcorrect Input");
+        return null;
+      }
+      else {
+        return new HttpRequest(this);
+      }
     }
+  }
+
+  @Override
+  public String toString() {
+    return "HttpRequest{" + "url='" + url + '\'' + ", method=" + method + ", headers=" + headers +
+        ", body='" + body + '\'' + ", timeout=" + timeout + '}';
   }
 }
