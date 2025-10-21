@@ -1,6 +1,5 @@
 package MusicStreamingPlatform;
 
-import java.util.List;
 
 public interface SearchManager {
   public Song searchSongs(String id);
