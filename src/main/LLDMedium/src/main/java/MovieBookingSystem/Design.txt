@@ -1,0 +1,9 @@
+Movie, Seat
+Screen --- This is a collection of seats in a theatre that is it..
+Show --- This is an object containing Screen, Movie and also Timings.
+Theater --- This is a theater with a list of Shows and also the city it is present in...
+City --- This is a object with name and a list of movies in this city..
+One person adds a show in the Theater then it goes to create the show for that we can use Show Factory this is using different Factories as well...
+Once this Show is created it is added to that Theater, then we also add that show to the City : Movie Repo.... So what we can Do is ShowFactory... This will contain all
+the details of creating this show.. And we can then go ahead and actually create this show Factory..
+
