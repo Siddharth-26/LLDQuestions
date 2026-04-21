@@ -1,0 +1,148 @@
+user should be able to record an expense
+user should be able to create a group
+user should be able to record the type of expense and the list of participants and the shares of each participant..
+user should be able to settle the expense by putting in a settle request.
+user should be able to see the user, group expense and the user should be able to see the user, user expense
+user should be able to also add individual expense with the group or without the group
+
+
+User implement Subscriber:
+    - userId
+    - userName
+    - getNotified(message)
+
+Group :
+    - HashMap<userid, Users>
+    - addUser()
+    - removeUser()
+
+UserRepo :
+    - HashMap<userId, User>
+    - getters setters
+
+
+GroupRepo :
+    - HashMap<groupId, Group>
+    - getters setters
+
+UserUserBalanceMap :
+    - ConcurrentHashMap<HashValue, Balance>
+    - getBalance(user1, user2)
+    - updateBalance(user1, user2, value)
+
+UserGroupBalanceMap:
+    - ConcurrentHashMap<HashValue, Balance>
+    - getBalance(user, group)
+    - updateBalance(user, group, value)
+
+Balance :
+    - user1
+    - user2
+    - balance Value
+
+ExpenseType Enum :
+    - EQUAL
+    - PERCENTAGE
+    - EXACT
+
+Orchestrator :
+    - splitManagerService
+    - addExpense(payer, value, HashMap<userId, value>, ExpenseType)
+    - getUserUserBalance(userID, user2ID)
+    - getUserGroupBalance(ID, groupID)
+    - settleAmount(userId, user2Id, amount)
+
+IExpenseManagerService :
+    - expenseCalculatoryFactory
+    - addExpense(group, payer, value, HashMap<userId, value>, ExpenseType)
+    - getUserUserBalance(userID, user2ID)
+    - getUserGroupBalance(ID, groupID)
+    - settleAmount(userId, user2Id, amount)
+
+SimpleExpenseManagerServiceImpl implements IExpenseManagerService:
+    - expenseCalculatoryFactory
+    - UserExpenseManager
+    - GroupExpenseManager
+    - UserRepo
+    - GroupRepo
+    - addExpense(groupId, payer, value, HashMap<userId, value>, ExpenseType)
+    - getUserUserBalance(userID, user2ID)
+    - getUserGroupBalance(ID, groupID)
+    - settleAmount(userId, user2Id, amount)
+
+UserExpenseManager:
+    - userUserBalanceMap
+    - notificationService
+    - updateExpense(user1, user2, amount) - updates the expense in the Map / DB and then notify users, using notification service
+    - getBalance(user1, user2)
+
+GroupExpenseManager:
+    - UserGroupBalanceMap
+    - updateExpense(user1, amount, group)
+    - updateExpense(HashMap, groupId)
+IExpenseCalculatorStrategy :
+    - calculateAmount(HashMap, value) -> HashMap
+
+ExpenseCalculatorStrategyImpl implements IExpenseCalculatorStrategy:
+// essentially a singleton class.
+    - calculateAmount(HashMap, value) -> HashMap
+
+
+ExpenseCalculatoryFactory :
+    - HashMap<ExpenseType, object>
+    - getExpenseCalculatorStrategyImpl(ExpenseType)
+
+
+NotificationService :
+    - notifyUser(user, message)
+
+public boolean addExpense(groupId, payerId, value, HashMap<userId, value> expenseMap, ExpenseType){
+        IExpenseCalculatorStrategy expenseCalculator = this.expenseCalculationFactory.getExpenseCalculator(ExpenseType);
+        // Calculate per user money that is owed to the payer.
+        HashMap<userId, Integer> calculatedExpense = expenseCalculator.calculateAmount(expenseMap, value);
+        this.groupExpenseManager.updateExpense(payer, amount, groupId);
+        try{
+            for(int userId : ArrayList<>(expenseMap.keys())){
+                this.userExpenseManager(userId, payerId);
+            }
+
+        }
+        catch(Exception e){
+            sout(e);
+        }
+        return;
+    }
+
+
+public class EqualSplitCalculationStrategyImpl implements IExpenseCalculatorStrategy{
+        public HashMap<Integer, double> calculateAmount(HashMap<Integer, double> amountMap, double amount){
+                   int size = amountMap.keySet().size();
+                   int share = amount/size;
+                   HashMap<Integer, double> shareMapping = new HashMap<>();
+                   for(int userId : new ArrayList<>(amountMap.keySet())){
+                           shareMapping.put(userId, share);
+                    }
+                   return shareMapping;
+            }
+    }
+
+public boolean updateExpense(userId1, userId2, amount){
+    String hashString = userId1.toString()+ +"#"+ userId2.toString();
+    this.userUserBalanceMap.compute(hashString, (hashString, value)->{
+        if(value!=null){
+        value.updateBalance(amount);
+        return value;
+        }
+        else{
+        Balance  balance = new Balance(user1, user2, amount);
+        return balance;
+        }
+    })
+
+
+}
+
+public settleAmount(user1, user2, amount){
+    this.userExpenseManager.updateExpense(user1, user2, amount);
+}
+

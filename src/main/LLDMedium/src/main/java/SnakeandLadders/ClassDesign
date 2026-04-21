@@ -1,0 +1,69 @@
+Board :
+    - playerPositions : HashMap<PlayerId, position>
+    - Board : HashMap<value>
+    - Snakes : HashMap<starting, ending>
+    - Ladders : HashMap < starting, ending>
+    - movePlayer(Player, incrementValue)
+    - getPlayerPosition(Player) - > returns player position
+Game :
+    - Board
+    - Dice
+    - List<Players>
+    - currentPlayer
+    - pointer
+    - WinningStrategy
+    - rollDice(Player)
+    - private movePlayer(currentPlayer, incrementValue)
+Dice :
+    - range
+    - rollDice() - > returns value between 1- range
+IWinningStrategy :
+    - List<Winning Positions(Integers)>
+    - hasWon(Player) - > boolean true/false
+Player :
+    - playerName
+    - playerId
+    - currentPosition
+    - getters and setters.
+IValidator :
+    - validateConfig(config) - > return true/false based on the valid configurations that we provide.
+
+public synchronised String rollDice(Player player){
+    if(this.currentPlayer.getID()!=player.getId()){
+        return "This is not your turn, " + currentPlayer.getName() +" please take your turn";
+    }
+    else{
+        int moveBy = this.dice.rollDice();
+        int currentPosition = this.movePlayer(moveBy);
+        if(this.winningStrategy.hasWon(currentPosition)){
+            return "Congratulations you have won the game, lets restart with a new game."
+        }
+        else{
+            this.pointer+=1;
+            this.pointer%=this.players.size();
+            this.currentPlayer = this.players.get(this.pointer);
+            return this.currentPlayer.getName()+"Please take your turn";
+        }
+    }
+    }
+
+public movePlayer(player, incrementValue){
+    int currentPosition = this.playerPosition.get(playerId);
+    currentPosition+=incrementValue;
+    if(this.snakes.containsKey(currentPosition)){
+        currentPosition = this.snakes.get(currentPosition);
+    }
+    else if(this.ladders.containsKey(currentPosition)){
+        currentPosition = this.ladders.get(currentPosition);
+    }
+    this.playerPosition.put(playerId ,currentPosition);
+
+}
+public boolean hasWon(int currentPosition){
+    if(this.winningPosition.indexOf(currentPosition)){
+        return true;
+        }
+    else{
+    return false
+    }
+}

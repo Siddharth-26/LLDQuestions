@@ -1,0 +1,20 @@
+Class Design :
+Player - playerName, playerSymbol...
+Board -
+    --N*N board that is currently
+    -- markGrid(row, column, Player).
+Validator -
+    --validate(playerMakingMove, playerInturn, row, column, Board);
+WinningStrategy -
+    - hasPlayerWon(playerInTurn, Board)
+    -isDraw()
+Game -
+    -Board
+    -List<Players>
+    -playerInTurn
+    -makeMove(player, row, column) -> Error in case invalid move or by invalid player, otherwise make move and check if the current player won the game.
+    - Also check if the game has been draw if yes then display that message else let the users make the next move...
+ExceptionClasses -
+InvalidMoveException
+InvalidPlayerTurnException
+... There might be more...

@@ -1,0 +1,88 @@
+Design Splitwise
+1. Add Expense : addExpense(payer, amount, List<participants>, SplitType (EQUAL/EXACT))
+2. getBalance(userId1, userId2)
+3. getAllBalance(userId1)
+4. settleBalance(userId1, userId2, amount)
+
+*****
+Notification Functionality
+*****
+
+Graph kind of scenario where each user is connected to other users in case there have been  transaction
+//user1 - > user2 +/-amount
+
+Entities :
+User
+Balance (edge between 2 users)
+SplitType
+ISplitStrategy
+ExpenseService
+Orchestrator
+# UserRepo , ExpenseRepo, UserUserBalanceSheet
+
+User (subscriber):
+    - userId metadata
+    - getNotification(message)
+Balance :
+    - userId1
+    - userId2
+    - currentBalance
+    - synchronised updateBalance(amount)
+SplitType ENUM:
+    - EQUAL PERCENTAGE
+ISplitStrategy :
+    - split(HashMap<userId, amount>, amount) - HashMap<userId, amount>  (the owing is implicit to the payer.)
+EqualSplitStrategy implements ISplitStrategy :
+    - split(HashMap<userId, amount>, amount)
+ExactSplitStrategy implements ISplitStrategy :
+    - split(HashMap<userId, amount>, amount)
+HashMap<SplitType, ISplitStragegy> factory
+ExpenseService :
+    - factory
+    - # connections to our Dbs userRepo, expenseRepo and then userBalanceSheet
+    - addExpense(payerId, amount, HashMap<userId, amount>, splitType)
+    - getBalance(userId1, userId2)
+    - getAllBalance(userId)
+    - settleBalance(userId1, userId2, amount)
+
+API Design :
+    - expense
+    POST /expense
+    Body :
+    {
+        idempotencyID :
+        payerId :
+        participants :
+        {
+        userId : amount
+        }
+        splitType : EQUAL
+    }
+    Response 201  , 5XX,
+
+    getAllBalance(userId1)
+    GET /user/balance
+
+    Response 200 Created , 5XX,
+
+    GET /user/balance/{userId}
+
+    Response 200 Created , 5XX,
+
+    PATCH /user/balance
+    {
+    userId2 : ....
+    amount : ...
+    }
+
+    Response 200 Created , 5XX
+
+
+UserTable :
+    userID , userName,
+
+
+    ID, FromUser , ToUser, Amount, version
+        userId1,    userId2,
+
+

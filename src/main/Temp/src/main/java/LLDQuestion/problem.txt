@@ -1,0 +1,136 @@
+Question : I have a doc editor kind of application
+- Users should be able to create a doc?
+- Sharing allowed between different people.
+- Delete the doc
+
+***********
+
+- ** Edit the doc **
+- Allowed to edit simultaneously.
+- Resolve Conflicts in case they arise. How do we resolve the concurrency issue.
+
+- Versioning of the doc - we want to maintain the version history / as in the whole content version of that
+
+
+Flow :  owner creates a doc and then they may share it with someone so we need to keep a list of people this doc is shared with and also the content of the documnt should be stored in the doc itself.
+
+Classes :
+
+Snapshot:
+    -userId
+    -content
+    -timestamp
+    - getContent()
+    - getTimestamp()
+
+IObserver :
+    - notifyObserver()
+
+Document :
+    - docId
+    - ownerId
+    - createdAt
+    - updatedAt
+    - List<Users> sharedWith
+    - List<Snapshots> snapshots
+    - content
+    - getters and setters
+    - synchronised updateContent(content, timestamp)
+    - getVersions()
+
+User implement IObserver:
+    - userId
+    - userEmail
+    - userName
+    - service
+    - notifyObserver(){
+        service.sendEmailNotification(this.email);
+    }
+
+
+DocController :
+    - docService
+    - createDocument(userId)
+    - shareDocument(documentId, List<Users>)
+    - deleteDocument(documentId)
+    - getDocument(documentId, userId)
+    - updateDocument(documentId, content, timestamp, userId)
+
+
+
+IEditResolutionStrategy :
+    - resolve(currentContent, updatedContent, lastUpdatedTimestamp, currentTimestamp)
+
+
+
+DocRepository :
+    - HashMap<documentId, Document>
+
+UserRepo :
+    - HashMap<userId, User>
+
+DocService :
+    - docRepo
+    - userRepo
+    - resolutionStrategy
+    - createDocument(userId)
+    - shareDocument(documentId, List<Users>)
+    - deleteDocument(documentId)
+    - getDocument(documentId)
+    - updateDocument(documentId, content, timestamp, userId)
+
+
+EditResolutionStrategyImpl implements IEditResolutionStrategy :
+    - resolve(currentContent, updatedContent, lastUpdatedTimestamp, userUpdatedTimestamp){
+        // userUpdatedTimestamp > lastUpdatedTimestamp - userwins and the document should be updated.
+        // lastUpdatedTimestamp > userUpdatedTimestamp - update Fails
+        // lastUpdatedTimestamp== "" - how do we resolve this...
+     }
+
+
+Document :
+    - docId
+    - ownerId
+    - createdAt
+    - updatedAt
+    - List<Users> sharedWith
+    - List<Snapshots> snapshots
+    - content
+    - getters and setters
+    - synchronised updateContent(content, timestamp)
+    - getVersions()
+
+    public synchronised boolean updateContent(content, timestamp){
+        if(this.update.after(timestamp)){
+            // create a new snapshot Snapshot(this.updatedAt, this.updatedBy, this.content);
+            this.snapshots.add(snapshot);
+            this.updatedTime = timestamp;
+            this.content = content;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public List<Snapshots> getVersions(){
+        return this.snapshots;
+    }
+    public SnapShot getVersion(snapShotId){
+        return snapShotId
+    }
+
+
+SimpleEditResolutionStrategy {
+    public String resolve(currentContent, updatedContent, lastUpdatedTimestamp, userUpdatedTimestamp){
+           if(lastUpdatedTimestamp.after(userUpdatedTimestamp)){
+                return currentContent;
+           }
+           else if(lastUpdatedTimestamp.before(userUpdatedTimestamp)){
+                return updatedContent;
+           }
+           else{
+            return currentContent;
+           }
+    }
+
+}
