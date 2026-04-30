@@ -1,0 +1,26 @@
+Notify Me functionality : User comes to the website sees that product is out of stock etc. and then clicks on the notify me button, once that button is pressed
+then the user will be registered for notification for that product, Now when the product is going from 0-> non zero inventory all the registered users would be notified about
+the product coming back in stock.
+FR -
+Users should be able to register for a product.
+Users should be able to receive the notifications about the product coming back in stock
+
+NFR - There should not be race conditions while registering for notifications for a product.
+
+Entites -
+
+Product implements Publisher
+Publisher Interface
+Subscribers Interface
+Users implements Subscriber
+ProductRepo
+Orchestrator
+NotificationManager
+NotificationStrategy interface
+EmailNotificationImpl implements NotificationStrategy
+
+
+
+
+
+

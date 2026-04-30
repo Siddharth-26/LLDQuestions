@@ -1,0 +1,39 @@
+Room :
+    - roomId
+    - roomName
+    - List<Slots> bookedSlots
+    - synchronised updateBooking()
+    - checkSlot()
+User implements ISubscriber:
+    - userId
+    - userName
+    - List<Slots> bookedSlots
+    - synchronised updateBooking()
+    - checkSlot()
+IPublisher :
+    - notifyAllSubs(List<ISubscribers>)
+ISubscriber :
+    - getNotification()
+MeetingRoomRepo :
+    - HashMap<meetingRoomId, MeetingRoom>
+    - getMeetingRoom(meetingRoomId)
+UserRepo :
+    - HashMap<userId, User>
+    - getUser(userId)
+Booking :
+    - Slot
+    - organiser
+    - participants
+    - meeting room
+    - getters and setters
+    - bookingId
+BookingRepo :
+    -  ConcurrentHashMap<bookindId, booking>
+    - getBooking(bookingId)
+BookingService implements IPublisher:
+    - MeetingRoomRepo
+    - UserRepo
+    - notifyAllSubs(List<>)
+    - createBooking(user, List<Users>, startTime, endTime, meetingRoom)
+    - cancelBooking(bookingId)
+

@@ -1,0 +1,29 @@
+State :
+    - selectItems(itemId, quantity) - State
+    - addMoney(BigDecimal amount) - State
+    - dispenseMoney() - State
+    - dispenseItem() - State
+    - cancelTransaction() - State
+Item :
+    - itemId
+    - name
+    - metadate
+Inventory  :
+    - HashMap<itemId, quantity> inventoryMap
+    - synchronised getItem(itemId, quantity)
+Transaction :
+    - paidAmount
+    - selectedItem
+    - selectedQuantity
+    - balanceAmount
+    - addMoney(BigDecimal amount)
+    - calcualteBalance()
+    - transactionState
+VendingMachine :
+    - inventory
+    - currentTransaction
+    - selectItems(itemId, quantity) - State
+    - addMoney(BigDecimal amount) - State
+    - dispenseMoney() - State
+    - dispenseItem() - State
+    - cancelTransaction() - State

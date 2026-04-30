@@ -1,0 +1,21 @@
+Vehicle
+VehicleType ENUM
+ParkingLot
+ParkingLotRepo
+ParkingLotManager
+ParkingLotAssignmentStrategy
+Ticket
+TicketRepo
+Orchestrator
+PriceCalculatorStrategy
+
+Vehicle : vehicleNumber, vehicleColor, metadata.. getters and setters
+Ticket :  ticketId, inTime, vehicleId, parkingLotId, vehicleType, getters and setters
+TicketRepo : HashMap<TicketId, Ticket>, getters, setters,
+VehicleType : BIKE, CAR, TRUCK
+ParkingLot : parkingLotId, canParkVehicleType, isOccupied, public synchronised boolean reserveParkingLot(), getters, setters,
+ParkingLotRepo : HashMap<ParkingLotId, ParkingLot> , getVehicleTypeParkingLot(vehicleType), getters, setters
+ParkingLotMatchingStrategyImpl extends ParkingLotStrategy : parkingLotRepo, @Override reserveParkingLot(vehicleType) - > parkingLotId and the parkingLot is reserved.
+ParkingLotManager : parkingLotmatchingStrategyImpl , tickeRepo, reserveParkingLot(Vehicle), verifyTicket(ticketId)
+Orchestrator: paymentStrategy, priceCalculator, parkingLotManager, reserveParking(vehicleId) -> Ticket, priceCalculator(Ticket) -> Price
+PriceCalculatorStrategyImpl implements PriceCalculatorStrategy : calculatePrice(Ticket)

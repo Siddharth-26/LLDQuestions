@@ -1,0 +1,65 @@
+User implements BookingSubscriber :
+    - metadata (userId, userEmail, phone, details)
+    - getBookingNotification(Booking)
+Driver implements DriverSubscriber:
+    - driver metadata
+    - getBookingRequestNotification(Booking)
+Booking -
+    - startLocation
+    - endLocation
+    - BookingStatus
+    - estimatedPrice
+    - userId
+    - private OTP
+    - confirmOTP(String OTP) - boolean
+    - candidateDriver
+BookingRepo :
+    - HashMap<bookingID, Booking>
+    - getters and setters
+
+
+PaymentStrategy :
+    - pay(amount)
+UPIPaymentStrategy ....
+
+
+DriverMatchingStrategy
+    - getDrivers(Booking) -  returns a list of drivers based on this strategy
+    // Responsibility is to take the request and return a list of eligible drivers to fulfill the request
+
+BookingService :
+    - BookingRepo
+    - UserRepo
+    - DriverRepo
+    - priceEstimatorService
+    - addBooking(startLocation, endLocation, userId) - creates a booking request as well as matches driver to booking using DriverMatchingService.
+    - cancelBooking(bookingId) - cancel bookingId
+DriverMatchingService :
+    matchDrivers(Booking) - create a match in the case you create a match you are going to update the booking and then return once that match is created then the update is sent to Booking service and
+    then once thing that can be done is notification sent to the users.
+
+Orchestrator :
+    - bookingService
+    - paymentStrategyFactory
+    - priceEstimatorService
+    - estimatePrice(startLocation, endLocation)
+    - addRequest(startLocation, endLocation, userId)
+    - cancelRequest(bookingId)
+    - makePayment(amount, Strategy)
+    - acceptRide(bookingId, driverId)
+
+public matchDrivers(Booking){
+
+    List<Drivers> candidates = this.driverMatchingStrategy.getDriver(Booking)
+    // for each driver in candidates
+     // update the booking with the current candidate
+     // send the request to the current candidate with a timeout
+    synchronised(Booking)
+    for (Driver driver: candidates){
+           booking.setCndidate(driver);
+        driver.sendNotification(Booking);
+        wait(10);
+    }
+
+
+}

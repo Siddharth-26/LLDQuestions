@@ -1,0 +1,54 @@
+Rider :
+    - riderId
+    - riderName
+    - riderStatus
+    - getters and setters
+ISubscriber :
+    -notifyRideRequest()
+Driver implements the interface:
+    - driver Id
+    - driverStatus
+    - vehicle details
+    - getters and setters
+    - notifyRideRequest()
+Request :
+    - riderId
+    - driverId - default - null
+    - requestStatus
+    - startLocation
+    - endLocation
+    - getters and setters for riderId and driverId location attributes.
+    - synchronised updateRequest()
+RequestRepo :
+    - Map<requestId, Request>
+    - getRequest(requestId)
+    - addRequest(requestId)
+RiderRepo :
+    - Map<riderId, Rider>
+    - getRider()
+    - addRider()
+DriverRepo :
+    - Map<driverId, Driver>
+    - getDriver()
+    - addDriver()
+Matching Strategy :
+    - match(Request)
+MatchingStrategyImplementations :
+    - DriverRepo
+    - LocationService
+    - match(Request)
+    - sortByLocation()
+BookingService :
+    - matchingStrategy
+    - driverRepo
+    - riderRepo
+    - requestRepo
+    - acceptRequest(requestId, driverId)
+    - createRequest(riderId, startPoint, endPoint)
+    - cancelRequest(requestId)
+Orchestrator :
+    - bookingService
+    - createRideRequest(riderId, startPoint, endPoint)
+    - acceptRideRequest(requestId, driverId)
+    - cancelRequest(requestId)
+

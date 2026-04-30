@@ -1,0 +1,60 @@
+Notification System
+Types of notification - Push , SMS, Email, WhatsApp
+Requirements :
+1. Multiple preferences
+2. Input - we get a list of users? (Assumption)
+3. Output -  Send notifications to the listed users in the input.
+
+NotficationStrategy
+
+User
+NotificationService
+INotificationStrategy
+NotificationType - ENUM
+
+
+NotificationService :
+    - notificationStrategyFactory
+    - sendNotification(message, List<Users>) - This should ideally send notifications to the users.
+
+User :
+    - userId
+    - List<NotificationTypes>
+    - getNotificationType();
+    - addNotificationType(NotificationType);
+    - removeNotificationType(NotificationType);
+
+INotificationStrategy :
+    - sendNotification(message, userId)
+
+PushNotificationStrategy implements INotificationStrategy :
+    - sendNotification(message, userId)
+
+SimpleNotificationStrategyFactory :
+    -HashMap<NotificationType, INotificationStrategy>
+    - getStrategyObject(NotificationType) - INotificationStrategy
+
+Status :
+    - userId
+    - HashMap<NotificationType, message>
+    - getters setters
+
+private SimpleNotificationStrategyFactory notificationStrategyFactory;
+public List<Status> sendNotification(message, List<User> userList){
+    List<Status> userStatusList =  new ArrayList<>();
+    for(User user: userList){
+        //create a status also include the notification types that the user has
+        List<NotificationType> userNotificationTypes = user.getNotificationTypes();
+        for (NotificationType notificationType: userNotificationTypes){
+            INotificationStrategy strategyObject = this.notificationStrategyFactory.getStrategyObject(notificationType);
+            try(strategyObject.sendNotification(message, user)){
+                // status object update for this notificationType to success;
+            }
+            catch(){
+                // status object update for this notification type with failure exception
+            }
+        }
+        userStatusList.add(status);
+    }
+    return userStatusList;
+}
