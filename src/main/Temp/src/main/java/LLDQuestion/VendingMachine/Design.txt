@@ -1,0 +1,20 @@
+Requirements :
+- User should be able to select a product in the vending machine they should also be able to then pay the money required for that product and quantity
+- Vending machine should check the inventory and also tell if that quantity of that product is available or not?
+- In the case it is available then there should be the payment that should be made, once the payment is made then the user will be first receiving the product
+- If there are remaining change then the user should also receive that.
+- In case the user wants to cancel after choosing the product or they want to cancel after making the payment they should be allowed to do so.
+
+entities:
+- VendingMachine
+- VendingMachineInventory
+- VendingMachineState
+- IdleState
+- InputAmountState
+- DispenseItemState
+- DispenseMoneyState
+- PaymentStrategy and PaymentStrategyImpl
+
+
+classes :
+- VendingMachine

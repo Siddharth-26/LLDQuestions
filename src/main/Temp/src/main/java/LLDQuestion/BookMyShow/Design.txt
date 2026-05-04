@@ -1,0 +1,104 @@
+Requirements :
+User should be able to search for movies and then get a list of theatres.
+Once the user chooses a theatre then they should be able to see the shows in that theatre.
+Once the user clicks on the shows the user should be able to see the seats.
+THe user should be able to select the seats and book them and get the bookingId.
+Users should be able to cancel the booking.
+
+NFR :
+No double bookings
+Search should be fast.
+
+Entity :
+Movie
+Seat
+Screen
+Show
+Theatre
+BookingManager
+SearchService
+Orchestrator
+MovieRepo
+TheatreRepo
+MovieTheatreRepo
+
+Movie :
+    - name
+    - runTime
+    - actors
+    - director
+    - other Metadata..
+    - getters and setters
+Seat :
+    - seatId
+    - status
+    - getters and setters
+    - ShowId
+    - synchronised reserveSeat() returns boolean
+    - unreserve()
+Screen :
+    - screenId
+    - List<seatNumbers>
+    - theatreId
+    - getters and setters
+Theatre :
+    - theatreId
+    - theatreName
+    - address (Metadata)
+    - List<Shows>
+    - getShows(movieName)
+    - addShow(Show show)
+    - removeShow(show)
+    - getters and setters
+Shows :
+    - showId
+    - screenId
+    - List<Seats>
+    - movie
+    - timings
+    - other Metadata
+    - getters and setters
+Orchestrator :
+    - SearchService
+    - BookingManager
+    - searchTheatre(movie)
+    - getShows(theatreId, movieName)
+    - getSeats(showId)
+    - bookSeats(List<seatIds>) - > bookingId
+    - cancelBooking(bookingId)
+SeatRepo :
+    - HashMap<SeatId, seatObject>
+    - getSeat(id)
+ShowRepo :
+    - HashMap<showId, showObject>
+TheatreRepo  :
+    - HashMap<theatreId, theatre>
+MovieTheatreRepo :
+    - HashMap<movieName, List<TheatreId>>
+    - getTheatres(movieName)
+MovieRepo :
+    -HashMap<movieName, Movie>
+ScreenRepo :
+    - HashMap<screenId, screen>
+Booking :
+    - bookingId
+    - show Metadata
+    - status
+BookingRepo :
+    - HashMap<bookingId, booking>
+    - getters and setters
+
+BookingManager :
+    - SeatRepo
+    - showRepo
+    - BookingRepo
+    - bookSeats(List<SeatIds>) -> Returns if the seats are empty and there is no double booking then returns the booking object/ ticket
+    - cancelBooking(bookingId)
+
+SearchService :
+    - MovieTheatreRepo
+    - TheatreRepo
+    - showRepo
+    - searchTheatre(movie)
+    - getShows(theatreId, movieName)
+    - getSeats(showId)
