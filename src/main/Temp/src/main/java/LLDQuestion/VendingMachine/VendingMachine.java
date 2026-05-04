@@ -17,6 +17,36 @@ public class VendingMachine {
     this.vendingMachineInventory = vendingMachineInventory;
     this.productPriceMap = productPriceMap;
   }
+// All these methods are void because they are not returning anything in turn I am printing things to the console.
+  public void selectProduct(int productId, int quantity){
+    VendingMachineState state = this.currentState.selectProduct(productId, quantity);
+    this.currentState = state;
+
+  }
+  public void payMoney(int amount){
+    VendingMachineState state = this.currentState.payMoney(amount);
+    this.currentState = state;
+  }
+  public void cancelTransaction(){
+    this.currentState = this.currentState.cancelTransaction();
+  }
+  public void dispenseProduct(){
+    VendingMachineState nextState = this.currentState.dispenseProduct();
+    currentState = nextState;
+    this.currentState.dispenseChange();
+  }
+  public void dispenseChange(){
+    VendingMachineState state = this.currentState.dispenseChange();
+    this.currentState = state;
+
+  }
+
+
+
+
+
+
+
 
   public int getExtraAmount() {
     return extraAmount;
