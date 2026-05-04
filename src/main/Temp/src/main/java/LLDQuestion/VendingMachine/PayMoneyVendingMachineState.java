@@ -31,16 +31,23 @@ public class PayMoneyVendingMachineState implements VendingMachineState{
 
   @Override
   public VendingMachineState cancelTransaction() {
-    return null;
+    if(this.vendingMachine.getSelectedProductQuantity()!=0){
+      int quantity = this.vendingMachine.getSelectedProductQuantity();
+      this.vendingMachine.getVendingMachineInventory().increaseInventory(this.vendingMachine.getSelectedProductId(), quantity);
+    }
+    this.vendingMachine.setSelectedProductId(-1);
+    this.vendingMachine.setUnpaidAmount(0);
+    this.vendingMachine.setSelectedProductQuantity(0);
+    return this;
   }
 
   @Override
   public VendingMachineState dispenseProduct() {
-    return null;
+    return this;
   }
 
   @Override
   public VendingMachineState dispenseChange() {
-    return null;
+    return this;
   }
 }

@@ -8,6 +8,8 @@ public class IdleVendingMachineState implements VendingMachineState{
   @Override
   public VendingMachineState selectProduct(int productId, int quantity) {
     if(this.vendingMachine.getVendingMachineInventory().reserveInventory(productId, quantity)){
+      this.vendingMachine.setSelectedProductQuantity(quantity);
+      this.vendingMachine.setSelectedProductId(productId);
       VendingMachineState payMoneyState = new PayMoneyVendingMachineState(this.vendingMachine);
       this.vendingMachine.setUnpaidAmount(this.vendingMachine.getProductPriceMap().getPrice(productId)*quantity);
       System.out.println("You have successfully made the selection please proceed to pay" + this.vendingMachine.getUnpaidAmount());
@@ -27,8 +29,13 @@ public class IdleVendingMachineState implements VendingMachineState{
 
   @Override
   public VendingMachineState cancelTransaction() {
+    if(this.vendingMachine.getSelectedProductQuantity()!=0){
+      int quantity = this.vendingMachine.getSelectedProductQuantity();
+      this.vendingMachine.getVendingMachineInventory().increaseInventory(this.vendingMachine.getSelectedProductId(), quantity);
+    }
     this.vendingMachine.setSelectedProductId(-1);
     this.vendingMachine.setUnpaidAmount(0);
+    this.vendingMachine.setSelectedProductQuantity(0);
     return this;
   }
 

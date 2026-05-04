@@ -9,17 +9,20 @@ public class DispenseProductState implements VendingMachineState {
 
   @Override
   public VendingMachineState selectProduct(int productId, int quantity) {
-    return null;
+    System.out.println("You cannot select a product while the machine is in the dispensing state");
+    return this;
   }
 
   @Override
   public VendingMachineState payMoney(int amount) {
-    return null;
+    System.out.println("You cannot payMoney while the machine is in dispensing state");
+    return this;
   }
 
   @Override
   public VendingMachineState cancelTransaction() {
-    return null;
+    System.out.println("You cannot cancel the transaction while the machine is in the dispensing state");
+    return this;
   }
 
   @Override
