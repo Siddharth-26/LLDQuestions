@@ -1,0 +1,37 @@
+Requirements :
+- User creates a logger specifies the destination types and the destination paths
+- The user can call methods like logger.error(message) and logger.info(), logger.warning() these would be utilised by the users to log some stuff..
+- There can be different destination types and different kinds of formatting and hence the logger should support that and be extensible..
+- The user can actually write the destinations based on the different log level types..
+
+
+Entities :
+- Logger
+- LogHandlerInterface
+- LogProcessorInterface
+- LogFormatterInterface
+- FileLogProcessor
+- ConsoleLogProcessor
+- ErrorLogFormatter
+- WarningLogFormatter
+- ErrorLogHandler
+- WarningLogHandler
+- Logtypes ENUM
+- DestinationTypes ENUM
+
+
+Logger :  HashMap<LogType, LogHandler>, configureHandler(LogType, DestinationType, destination(optional)), error(), info(), debug()
+LogProcessorInterface : processMessage(String message)
+LogFormatterInterface : formatMessage(message) - > formatted message.
+FileLogProcessor implements LogProcessorInterface : processMessage(message) - > process the message based on the fact that the destination type is a file might require some
+additional formatting like putting the message in JSON/XML or remain as it is....
+ErrorLogFormatter implements LogFormatterInterface : formatMessage(message) - > formats the message based on the Logtype and returns that message.
+LogHandlerInterface : handleMessage(message) - > it just handles the incoming message based on the type of log and the destination type and configurations.
+ErrorLogHandler : logProcessorInterface, logFormatterInterface, handleMessage(message)
+LogTypes : ERROR, INFO, DEBUG
+DestinationTypes : FILE, CONSOLE etc...
+
+
+
+
+
