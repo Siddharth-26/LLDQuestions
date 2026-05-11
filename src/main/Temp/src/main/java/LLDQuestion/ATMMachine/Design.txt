@@ -1,0 +1,21 @@
+ATM Machine Design :
+Requirements :
+- withdraw Money
+- check Balance
+- verify Card
+- verify PIN
+- should be able to cancel the transaction in between.
+
+
+Entities :
+- ATMMachine :  currState, AccountInventory, CardInventory, currUser,
+- State : insertCard(CardNumber), insertPin(Pin), chooseOperation(OPERATION.CHECK_BALANCE/OPERATION.WITHDRAW), cancelTransaction(), checkBalance(), withdrawAmount(), dispenseAmount()
+- IdleState :
+- PinInsertionState :
+- ChooseOperationState :
+- CheckBalanceState :
+- WithdrawMoneyState :
+- DispenseAmountState :
+these are the states and they will implement the state interface as displayed above..
+
+

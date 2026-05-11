@@ -23,6 +23,7 @@ public class ErrorLogHandler implements LogHandler{
   public boolean addProcessor(DestinationConfiguration destinationConfiguration){
     LogProcessor processor = this.logProcessorFactory.getLogProcessor(destinationConfiguration.getType());
     processor.setDestination(destinationConfiguration.getDestinationPath());
+    this.processorList.add(processor);
     return true;
   }
 }
