@@ -1,0 +1,46 @@
+Requirements :
+- User should be able to select the Pickup Point and the date range and should be able to also specify the filters like budget and vehicle type
+they should be able to see the list of the vehicles available during this particular date range and of the specified filters.
+- Users should be able to reserve a particular vehicle , and change or modify these reservations
+- User should be able to pay with different type of modes. The price calculations should be extensible.
+- There should be audit logs of payments and transactions
+- There should be logs of the transactions that are being done when the reservations that happen.
+
+
+Entities :
+- Vehicle
+- VehicleRepo
+- VehicleReservationRepo (Vehicle, Day, Status)
+- VehicleStatus ENUM
+- Orchestrator
+- BookingManagerService
+- ReservationManagerService
+- ReservationRepo
+- AuditTransactionRepo
+- PaymentStrategy
+- PriceCalculationStrategy
+- PaymentStrategyImpl
+- PriceCalculationStrategyImpl
+- PickupPoints
+- PickupPointsRepo
+- User
+- Reservation
+
+- User - userId, userName ... - Done
+- Reservation - reservationid, vehicleId, List<Date>, status - Done
+- Vehicle - vehicleId, vehicleMetadata - Done
+- PickupPoints - pickupPointId, name, address - Done
+- PaymentStrategy - payMoney(int money) - Done
+- PriceCalculationStrategy - calculatePrice(Vehicle, int no_of_days)
+- pickupPointsRepo - HashMap<pickupPointsId, List<vehicleId>>
+- vehicleStatus - AVAILABLE, RESERVED, UNAVAILABLE - Done
+- VehicleRepo - HashMap<VehilcleId, Vehicle> - Done
+- VehicleReservationRepo - <<VehilceId+Date>, BookingStatus> - Done
+- Orchestrator - BookingManagerService, SearchService, PaymentService, search(pickupLocation, priceRange, vehicleType, startDate, endDate) - > List<Vehicle>, createBooking(vehicleId, dateRange) -> Reservation , modifyBooking(reservationId, dateRange) -> Reservation , cancelBooking(reservationId)
+- BookingManagerService - VehicleReservationRepo, ReservationRepo, VehicleRepo, createBooking(vehicleId, dateRange) -> Reservation , modifyBooking(reservationId, dateRange) -> Reservation , cancelBooking(reservationId)
+- SearchService - pickupPointsRepo, VehicleRepo, PriceCalculationStrategy, search(pickupPoint, vehicleType, dateRange, priceRange) -> List<Vehicle>
+- PaymentService
+- Filter - Done
+
+
+

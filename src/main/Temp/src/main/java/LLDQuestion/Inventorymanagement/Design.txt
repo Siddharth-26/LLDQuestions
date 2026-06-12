@@ -1,0 +1,24 @@
+Requirements :
+- Multiple Warehouses
+- Users should be able to fetch and add items to the inventory
+- Should be concurency safe
+- admins should be able to transfer items between inventory
+- warehouse managers should be alerted if the product is going below a certain threshold.
+
+
+Entities :
+- Product
+- Threshold
+- users
+- inventory
+- warehouses
+- INotificationSystem
+- EmailNotificationSystem
+- SMSNotificationSystem
+- orchestrator
+- warehouseRepo
+- userRepo
+- ProductThresholdRepo
+
+
+Product
