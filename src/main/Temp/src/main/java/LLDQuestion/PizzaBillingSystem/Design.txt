@@ -1,0 +1,51 @@
+Requirements :
+- Pizza Billing system for POS sales person.
+- Users can order a pizza and add different toppings
+- Each order can have multiple pizzas
+- Users should be able to add the toppings to the pizza and the bill should reflect the same.
+
+Below the line :
+- No inventory management.
+
+Assumptions :
+- Pre seeded with values of toppings and pizzas and their prices
+
+Entities :
+- Toppings
+- Pizza has Toppings
+- Order
+- OrderManager
+- PizzaPriceRepo
+- ToppingPriceRepo
+- OrdersRepo
+
+OrderManager :
+- PizzaPriceRepo
+- ToppingPriceRepo
+- OrdersRepo
+- currOrder
+- createOrder() -> orderId
+- addPizza(pizzaType) -> pizzaId in the order
+- addToppings(toppingsType) -> boolean
+- calculateBill()
+
+
+
+Topping Interface -
+ - addTopping(Topping) -> boolean
+ - calculateBill() -> BigDecimal
+
+Pizza -
+ - toppings
+ - type
+ - price
+ - addTopping(Topping) -> boolean
+ - calculateBill() -> BigDecimal
+
+Order -
+ - List<pizza>
+ - addTopping(pizzaId, type) -> boolean
+ - addPizza(type) -> boolean
+ - calculateBill() -> BigDecimal
+
+
