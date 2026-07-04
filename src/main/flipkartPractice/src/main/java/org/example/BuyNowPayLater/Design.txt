@@ -1,0 +1,52 @@
+Requirements :
+- Users are allowed to buy now and pay later,
+- Each user has some credit limit.
+- Credit limit depletes on buying items and replenishes on paying the dues.
+- The due date is 30 days from the date of purchase.
+- In case the user has some due amount then in that case what is the expected behaviour? In the sense that is the user allowed to take other credit?
+- Assuming that the credit limit is the last straw even if there are dues but if it is not exceeding the credit limit then it is not an issue.
+- Users are blacklisted when they have >=3 pending dues and they are removed from the list when they clear all their dues...
+
+Core Entities :
+- User
+- UserRepo
+- Items
+- ItemsRepo
+- Credit Limit is per user and hence it is a property of the user... for now that is what I am thinking... Or just ask this to the interviewer..
+- Assuming that the credit checking is something that is dynamic I am thinking that for each user before purchase we need to check the credit limit and that should as well be atomic in nature.
+- ICreditLimitChecker
+- CreditLimitCheckerImpl
+- InventoryRepo
+- OrderManager (Manages the order creation, calculation of the order total and then Changing the status of the order... )
+- UserManager (Manages the user credits and the user accounts like settling the credit or reducing the credit for a user...)
+- InventoryManager (Manages the Inventory... Reducing and adding the items atomically.)
+- Orchestrator(exposes all the methods to the user).
+- Order
+-
+
+
+
+Orchestrator :
+public boolean buy(String orderId, String user, List<String> itemsWithQuantity, int purchaseDay){
+
+    # Step 0 Check if this user is actually a Blacklisted User if yes then mark this as blacklisted User and reject the order.
+    # Step 1 Check the sum total of all the items and then reduce the credit limit atomically. Otherwise throw appropriate Error.
+    try {
+        # Step 2 Reduce the inventory of all the items in the order even if one of the items is lesser than the required amount then the whole transaction fails with the appropriate error and the items whose quantity is being reduced will be increased again.
+        try{
+            # Reducing the inventory of all the items in that order once that is done an order Object should be created and the status of that order should be maintained in the Order Repo.
+            # We also need to store the status of the order and the user who created the order...
+            # Also need to store the orders in the user account.
+        }
+        catch{
+            # In case the above fails then we again increment the items quantity and then again increment the credit limit. Once that is done it will be returned as False
+        }
+    }
+    catch{
+        Credit Limit < Order Total Error should be thrown.
+    }
+}
+
+public void clearDues(String user, List<String> orderToClear, int clearingDay) {
+    Atomically clear the dues for these orders that are listed in the list
+}

@@ -1,0 +1,84 @@
+1. User should be able to give storeId and the start and end date based on that they would get back a list of vehicles that are available on those dates.
+2. The user should be able to click on that vehicle and then see the vehicle details.
+3. The user should be able to reserve that vehicle for a certain startDate and endDate.
+4. The user should be able to modify the reservation or also cancel it.
+5. The pricing model is per vehicle per day and there is no discounts that are kept for now.
+6. Concurrent bookings for the same vehicle for overlapping dates should not be allowed.
+
+Assumptions :
+1. Vehicle are already preseeded in the stores and they are not really changing.
+
+Entities :
+1. Vehicle
+2. User
+3. Reservation
+4. ReservationManager
+5. Stores
+6. PriceCalculator
+7. VehicleInventory (Might not be needed just keeping as extension)
+8. SearchService (For fetching the available vehicles given a certain pickup location and certain date)
+
+
+Vehicle :
+vehicleId,
+model,
+number,
+reservedDates : List<Dates>
+checkReservation(startDate, endDate)
+reserve(startDate, endDate)
+unreserve(startDate, endDate)
+modifyReservation(startDate, endDate)
+
+User:
+metadata for the user like userId, userName etc.
+getters and setters
+
+Reservation :
+reservationId,
+vehicleId,
+startDate,
+endDate,
+userId
+status : CANCELED, PAID, UNPAID
+
+IPriceCalculator :
+calculate(startDate, endDate, vehicleId)
+
+
+ReservationManager:
+vehicleRepo
+reservationRepo
+reserveVehicle(vehicleId, startDate, endDate) -> Reservation
+cancelReservation(reservationId) -> boolean
+modifyReservation(reservationId, startDate, endDate) -> boolean
+
+
+Stores :
+storeId,
+List<Vehicles>
+getters and setters
+getFreeVehicles(startDate, endDate) -> List<Vehicles>
+
+StoreRepo:
+HashMap<Integer, Store>
+getStore(storeId)
+
+VehicleInventory :
+HashMap<vehicleId, Vehicle>
+getVehicle(vehicleId)
+
+SearchService:
+storeRepo
+searchVehicles(storeId, startDate, endDate) -> List<Vehicles>
+
+
+Orchestrator :
+SearchService
+ReservationManager
+PriceCalculator
+searchVehicles(storeId, startDate, endDate)
+reserveVehicle(vehicleId, startDate, endDate)
+cancelReservation(reservationId)
+modifyReservation(reservationId, startDate, endDate)
+
+
