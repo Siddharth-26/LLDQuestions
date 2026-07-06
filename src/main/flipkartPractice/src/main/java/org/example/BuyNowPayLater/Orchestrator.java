@@ -20,7 +20,8 @@ public class Orchestrator {
     this.userManager.registerUser(userName, creditLimit);
   }
   public boolean buy(String orderId, String user, List<String> itemsWithQuantity, int purchaseDay){
-    this.orderManager.placeOrder(String orderId, String user, List<String> itemsWithQuantity, int purchaseDay);
+//    this.orderManager.placeOrder(String orderId, String user, List<String> itemsWithQuantity, int purchaseDay);
+      return true;
   }
 }
 
