@@ -1,0 +1,32 @@
+Flipkart Delivery Service
+Requirements
+- Users should be able to create orders : orderName, orderPinCode, creationTime.
+- Admin should be able to create new drivers and associate them with pincodes.
+- There should be a function that assigns drivers to these orders and return the delivery status logs..
+- Multiple delivery agents can have the same pin code but one delivery agent should only hace one pincode.
+- Orders of should be delivered by the drivers of that pincode..
+- Time stamp is yyyy-MM-dd HH:mm this is for making things sortable... Same time zone no conversion
+
+Rules :
+- The execution works like this :
+    - The orders are first sorted on the creationTime / scheduledTime. If same are there then they are sorted based on the orderName.
+    - The drivers are assigned based on the order pincode.
+    - If the driver is not available then wait for the driver to become available.
+    - Once the driver is available then for normal delivery it is scheduled and completed immediately.
+    - For the scheduled delivery the user is actually busy for sometime.
+    - Logging order should be based on the event time (delivery start is one event and end is another), both these logged
+    - Event with lesser time is placed first and if the same time then lesser assignmentIndex should be placed first once that is done.
+
+Entities :
+- Orders
+- Drivers
+- OrderRepo
+- DriverRepo
+- FKDeliveryService
+- OrderType
+- MatchingStrategy
+- SimpleMatchingStrategy
+- Logger
+- SimpleLoggerImpl
+
+

@@ -16,6 +16,9 @@ public class OrderManager {
     if(this.verifyOrder.verifyOrder(user)){
         try{
           // To check if the credit limit is less than the sum total???
+          return true;
+        }
+        catch(Exception e){
 
         }
     }
