@@ -1,4 +1,4 @@
-package org.example.BuyNowPayLater;
+package org.example.BNPL;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package org.example.FlipkartDeliveryService;
+package org.example.DeliveryService;
 
 public class Orchestrator {
   OrderRepo orderRepo;

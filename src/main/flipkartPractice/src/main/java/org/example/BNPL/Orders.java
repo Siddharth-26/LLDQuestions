@@ -1,4 +1,4 @@
-package org.example.BuyNowPayLater;
+package org.example.BNPL;
 
 public class Orders {
   String userId;

@@ -1,4 +1,4 @@
-package org.example.FlipkartDeliveryService;
+package org.example.DeliveryService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

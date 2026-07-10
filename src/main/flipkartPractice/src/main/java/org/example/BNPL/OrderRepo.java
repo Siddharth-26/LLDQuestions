@@ -1,6 +1,5 @@
-package org.example.BuyNowPayLater;
+package org.example.BNPL;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
