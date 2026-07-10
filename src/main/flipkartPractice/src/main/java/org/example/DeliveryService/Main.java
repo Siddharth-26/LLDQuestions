@@ -1,4 +1,4 @@
-package org.example.FlipkartDeliveryService;
+package org.example.DeliveryService;
 
 public class Main {
   public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package org.example.FlipkartDeliveryService;
+package org.example.DeliveryService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
