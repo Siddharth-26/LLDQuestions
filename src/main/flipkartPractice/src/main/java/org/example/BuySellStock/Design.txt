@@ -1,0 +1,29 @@
+Requirements :
+- User Signup
+- Admin should be able to add / update stocks with their price.
+- User should be able to buy stocks that are available, only when walletBalance>buying price of the stocks user is buying.
+- User should be able to sell the stocks.
+- User should be able to view the stocks that are in the available list and also the price of these stocks
+- User should be able to see their portfolio.
+- User should be able to get their wallet balance.
+- Concurrent operations should be handled appropriately.
+
+What are the concurrency checks that need to be handled?
+- When the admin is changing / updating the stock list this operation should be holding some sort of lock on the list that it is updating users should not see the stale / incorrect data.
+- When the user is purchasing in that case as well the deductions from the wallet need to be atomic.
+
+
+Entities :
+- IUser
+- IStocks
+- IPortfolio
+- SimpleUser / Admins
+- IStockPriceRepo
+- IUserRepo
+- IStockManagerService
+- ITransactionManagerService
+- IOrchestrator
+- IUserManagerService
+- IUserPortfolioMap
+
+
