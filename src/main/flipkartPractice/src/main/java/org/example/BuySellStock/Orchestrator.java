@@ -3,7 +3,6 @@ package org.example.BuySellStock;
 import java.util.List;
 
 import org.example.BuySellStock.models.Stocks;
-import org.example.BuySellStock.models.User;
 import org.example.BuySellStock.services.IStockManagerService;
 import org.example.BuySellStock.services.ITransactionManagerService;
 import org.example.BuySellStock.services.IUserManagerService;
@@ -42,13 +41,19 @@ public class Orchestrator {
   public boolean updateUser(String userId){
     return this.userManagerService.updateUser(userId);
   }
-  public boolean removeUser(User user){
-    return this.userManagerService.removeUser(user);
+  public boolean removeUser(String userId){
+    return this.userManagerService.removeUser(userId);
   }
   public Integer getWalletBalance(String userId){
     return this.userManagerService.getWalletBalance(userId);
   }
   public List<String> getPortfolio(String userId){
     return this.userManagerService.getPortfolio(userId);
+  }
+  public boolean addUserWalletBalance(String userId, int amount){
+    return this.userManagerService.addWalletBalance(userId, amount);
+  }
+  public boolean removeUserWalletBalance(String userId, int amount){
+    return this.userManagerService.removeWalletBalance(userId, amount);
   }
 }

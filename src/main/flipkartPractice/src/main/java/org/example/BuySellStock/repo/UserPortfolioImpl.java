@@ -1,5 +1,6 @@
 package org.example.BuySellStock.repo;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -43,5 +44,10 @@ public class UserPortfolioImpl implements IUserPortfolio{
       return null;
     });
     return  result.get();
+  }
+
+  @Override
+  public Portfolio getUserPortfolio(String userId) {
+    return this.userPortfolioMap.get(userId);
   }
 }
