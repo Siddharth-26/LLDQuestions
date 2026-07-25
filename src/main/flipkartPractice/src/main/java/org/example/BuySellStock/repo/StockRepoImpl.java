@@ -51,4 +51,11 @@ public class StockRepoImpl implements IStockPriceMap{
     });
     return result.get();
   }
+
+  @Override
+  public Stocks getStockBySymbol(String symbol) {
+    return this.stockPriceMap.computeIfPresent(symbol, (key, value)->{
+      return value;
+    });
+  }
 }

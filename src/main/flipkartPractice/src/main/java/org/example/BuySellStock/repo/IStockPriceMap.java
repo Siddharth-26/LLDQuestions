@@ -6,4 +6,5 @@ public interface IStockPriceMap {
   public boolean addStock(Stocks stock);
   public boolean removeStock(Stocks stock);
   public boolean updateStock(Stocks stock);
+  public Stocks getStockBySymbol(String symbol);
 }
