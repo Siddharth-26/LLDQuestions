@@ -1,0 +1,40 @@
+Requirements :
+- We should be able to register new gateway and also provide a list of currencies supported by these gateways.
+- User should be able to send a payment request with a transactionId, amount, cardNumber, preferred gateway (optional) and currency.
+- Validation of credit card should be done before processing the payment.
+- In Gateway does not support currency , choose the lexicographically smallest card for transaction.
+- User should be able to see the status of the transaction.
+- Client is a backend service here.
+- Client might ask for a refund only full refund is supported.
+- Only successful payment can be refunded.
+
+
+Core Entities :
+- transactions
+- transactionStates
+- Gateways
+- GatewayService
+- TransactionService
+- TransactionRepo
+- GatewayRepo
+- Orchestrator
+
+
+ITransaction : attributes, getters and settters.
+TransactionStatesENUM : INPROGRESS, FAILED, REFUNDED.
+IGateways : attributes , getters and setters, checkCurrencySupport(), enableGateway(), disableGateway()
+IGatewayService : deals with management of gateway and when a transaction comes checks the gateway support for transaction
+enableGateway(), disableGateway(), addGateway(), deleteGateway(), checkCurrencySupport()
+GatewayRepo : map of all the gateways use concurrentHashMap for concurrency control and making sure no corruption of data as well concurrentModificationExceptions.
+TransactionRepo : again a concurrentHashMap containing all the transactions.
+TransactionService : has transactionRepo and GatewayService processPayment(), getTransactionDetails(), refundTransaction()
+currenciesENUM :
+
+
+Classes :
+
+GatewaysImpl : GATEWAYNAME, supportedCurrencies, status, enableGateway(), disableGateway(), checkCurrencySupport(currency);
+GatewayServiceImpl : GatewayRepo, checkCurrencySupport(currency), enableGateway(), disableGateway(), addGateway(name, supportedcurrencies), deleteGateway(gatewayname)
+Gatewayrepo : ConcurrentHashMap<String, IGateway> getGateway(name), addGateway(name)
+TransactionService : GatewayService, TransactionRepo, createTransaction(id, currency, amount, prefferedGateway) , getTransactionDetails(id), refundTransaction(id)
+

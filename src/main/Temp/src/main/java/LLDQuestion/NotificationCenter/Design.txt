@@ -1,0 +1,23 @@
+Requirement :
+- Service sends the events to the system
+- System should be able to determine per event what are the notifications that needs to be sent and return them as a list
+ (Channels for that event and the message for that event?)
+- Example : order_placed -> [{type : SMS, message : your order was placed. userId : userId}]
+
+
+Entities :
+- NotificationChannels
+- events
+- NotificationFormatters
+- NotificationManager
+- Orchestrator
+- eventsRepo
+- notificationChannelRepo
+
+
+Interfaces :
+- notificationChannels - name, prepareMessage(event)
+- events - eventName, preferred_channels , getChannels(), addChannel(), deleteChannel()
+- notificationFormatters - name, formatMessage()
+- notificationManager - eventsRepo, notificationChannelRepo, getNotifications(event)
+- orchestrator - notificationManager, sendNotifications(event)

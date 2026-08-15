@@ -1,0 +1,43 @@
+Any Developer can apply on any project.
+Developers (ASSIGNED, UNASSIGNED) , Leads, Projects (OPEN, REQUESTED, ASSIGNED, INPROGRESS, COMPLETED), Requests, ReaperThread runs every 5 minutes to cancel the projects and that are not picked up right now..
+
+
+Entities :
+- Developers
+- Leads
+- Projects
+- Requests
+- ReaperThread that wakes up every couple of minutes and makes sure that the projects are being cancelled and they are not being assigned to anyone.
+- ProjectStatus
+- DevStatus
+- ProjectCategories
+- RequestRepo
+- ProjectRepo
+- RequestManager
+- ProjectManager
+- LeadRepo
+- DeveloperRepo
+- DeveloperManager (Developer Status and updates...)
+- LeadManager
+- SearchService
+
+Assumptions :
+- Developer Name are unique Project Names are unique and lead names are unique.
+- Things to look out for ProjectStateMachine and how it is coordinating. What happens in case there are 2 requests that are being sent out at the same time concurrently.. What would be the situation?
+- StateTransitions etc. should be proper..
+- Developers should be able to view available projects (Bug is here...) and request to work on a project (No issues as of now..). A developer can only work on any one project at a time (No issues as of now..). (3rd point in the doc does not seem to be satisfied right now) ()
+- Leads can receive multiple requests from the developers but can approve only one request per project. (Accept request has a flaw because in the case there are 2 acceptRequest calls are being made for 2 dev requests then it is going to be an issue because then we are entering a check then act race condition.. That needs to be solved somehow Solutions discuss..)
+- Once a request is approved, the project is assigned to that developer. (Works)
+- Leads can cancel a project before it is approved. If a project is canceled, all pending requests should be removed. (The second point I am not sure about.. The requests will remain but they will not be fulfilled this might make this as kind of how memory leak happen there are orphaned requests that are not being cleaned up.)
+- Once assigned, the developer can start working on the project and later mark it as completed. (No INPROGRESS STATE change method from the developer.. That is something that is not present as of now..)
+- Once a developer starts a project, the Lead cannot cancel it. (This is checked already)
+
+Current implementation verifications :
+- Upon cancellation of the current project do we need to remove it or is it ok to be present?
+
+Bonus Features:
+- Notify Leads and Developers when a project status updates. (How do we make this happen we make the devs and the leads as subscribers to the project and the project itself will be a publisher then once the state is changed for a project we will trigger the notifySubs() method in the project and that will
+notify all the subscribers in the list.. Clarification : Who all get notified about the project update the assigned developers and lead who owns it or there is a dedicated list of people that are being updated here who will be notified?)
+- Leads should be able to rate developers after a project is completed. (RatingService, has Methods like rateDev(devName, projectName) -> Dev rating stored somewhere each dev will have some rating that they can calculate.. This can also be decoupled, the dev wil)
+- A dashboard to display top developers based on different strategies such as the number of completed projects and ratings. (getDevelopersBy(CRITERIA) -> Gives an descending list of devs based on the defined criteria..)
+
